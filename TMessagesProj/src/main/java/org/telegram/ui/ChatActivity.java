@@ -781,22 +781,27 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
                         AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity());
                         builder.setTitle(LocaleController.getString("Notifications", R.string.Notifications));
                         CharSequence[] items = new CharSequence[]{
+                                LocaleController.formatString("MuteFor", R.string.MuteFor, LocaleController.formatPluralString("Minutes", 15)),
                                 LocaleController.formatString("MuteFor", R.string.MuteFor, LocaleController.formatPluralString("Hours", 1)),
                                 LocaleController.formatString("MuteFor", R.string.MuteFor, LocaleController.formatPluralString("Hours", 8)),
-                                LocaleController.formatString("MuteFor", R.string.MuteFor, LocaleController.formatPluralString("Days", 2)),
-                                LocaleController.getString("MuteDisable", R.string.MuteDisable)
+                                LocaleController.formatString("MuteFor", R.string.MuteFor, LocaleController.formatPluralString("Hours", 24)),
+                                LocaleController.getString("MuteDisable", R.string.MuteDisable),
+
                         };
                         builder.setItems(items, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         int untilTime = ConnectionsManager.getInstance().getCurrentTime();
+
                                         if (i == 0) {
-                                            untilTime += 60 * 60;
+                                            untilTime += 60 * 15;
                                         } else if (i == 1) {
-                                            untilTime += 60 * 60 * 8;
+                                            untilTime += 60 * 60;
                                         } else if (i == 2) {
-                                            untilTime += 60 * 60 * 48;
+                                            untilTime += 60 * 60 * 8;
                                         } else if (i == 3) {
+                                            untilTime += 60 * 60 * 24;
+                                        } else if (i == 4) {
                                             untilTime = Integer.MAX_VALUE;
                                         }
 
